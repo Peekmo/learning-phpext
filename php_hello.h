@@ -9,9 +9,13 @@ PHP_FUNCTION(mprint);
 PHP_FUNCTION(makeLong);
 PHP_FUNCTION(makeBool);
 PHP_FUNCTION(getYig);
+
 PHP_FUNCTION(eat);
 PHP_FUNCTION(findName);
 PHP_FUNCTION(cmpArray);
+
+PHP_FUNCTION(makeObject);
+
 PHP_MINIT_FUNCTION(hello);
 
 void hello_old_one_pefree(zend_rsrc_list_entry *rsrc TSRMLS_DC);

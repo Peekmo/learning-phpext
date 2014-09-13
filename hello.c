@@ -3,6 +3,7 @@
 #endif
 #include "php.h"
 #include "php_hello.h"
+#include "cultist.h"
 
 
 int le_old_one; // "list entry" old_one
@@ -18,6 +19,7 @@ static zend_function_entry hello_functions[] = {
     PHP_FE(eat, NULL)
     PHP_FE(findName, NULL)
     PHP_FE(cmpArray, NULL)
+    PHP_FE(makeObject, NULL)
     {NULL, NULL, NULL}
 };
 
@@ -48,6 +50,7 @@ ZEND_GET_MODULE(hello)
 PHP_MINIT_FUNCTION(hello)
 {
     le_old_one = zend_register_list_destructors_ex(NULL, hello_old_one_pefree, "Great Old Ones", module_number);
+    hello_init_cultist(TSRMLS_C);
 }
 
 // Destructor, called automatically module_type_pefree
@@ -96,6 +99,15 @@ PHP_FUNCTION(getYig)
 
         zend_hash_update(&EG(persistent_list), key, strlen(key)+1, (void*)&nle, sizeof(zend_rsrc_list_entry), NULL);
     }
+}
+
+// -------------------------------- Object
+PHP_FUNCTION(makeObject)
+{
+    object_init(return_value);
+
+    zend_update_property_string(NULL, return_value, "name", strlen("name"), "test" TSRMLS_CC);
+    zend_update_property_long(NULL, return_value, "worshippers", strlen("worshippers"), 10 TSRMLS_CC);
 }
 
 // -------------------------------- Arrays
